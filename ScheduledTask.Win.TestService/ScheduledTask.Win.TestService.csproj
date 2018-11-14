@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Installer.bat" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ScheduledTask.Infrastructure\ScheduledTask.Infrastructure.csproj">

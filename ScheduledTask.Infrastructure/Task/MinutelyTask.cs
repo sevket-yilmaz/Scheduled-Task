@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Diagnostics;
+using System.Threading;
 using System.Timers;
 
 namespace ScheduledTask.Infrastructure.Task
@@ -23,7 +24,26 @@ namespace ScheduledTask.Infrastructure.Task
         {
             if (this.ItsTime)
             {
-                new Thread(new ThreadStart(Run)).Start();
+                //TODO bunu Minutly de değil de üst seviyede işlemek lazım 
+                new Thread(new ThreadStart(
+                    delegate ()
+                    {
+                        try
+                        {
+                            Run();
+                        }
+                        catch (System.Exception ex)
+                        {
+                            // TODO
+                            using (EventLog eventLog = new EventLog("Application"))
+                            {
+                                eventLog.Source = "Application";
+                                eventLog.WriteEntry("Exception: " + ex.Message, EventLogEntryType.Error, 101, 1);
+                                eventLog.WriteEntry("InnerException: " + ex.InnerException?.Message, EventLogEntryType.Error, 101, 1);
+                            }
+                        }
+                    }
+                    )).Start();
             }
         }
     }

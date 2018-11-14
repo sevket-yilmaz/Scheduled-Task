@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ScheduledTask.Infrastructure
 {
     [RunInstaller(true)]
-    public class WindowsServiceInstaller : System.Configuration.Install.Installer
+    public abstract class WindowsServiceInstaller : System.Configuration.Install.Installer
     {
         public WindowsServiceInstaller()
         {
@@ -22,6 +22,7 @@ namespace ScheduledTask.Infrastructure
 
             this.serviceProcessInstaller.Password = null;
             this.serviceProcessInstaller.Username = null;
+            this.serviceProcessInstaller.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
 
             this.serviceInstaller.ServiceName = "ScheduledTaskWindowsService";
 
@@ -31,8 +32,8 @@ namespace ScheduledTask.Infrastructure
 
         }
 
-        private System.ServiceProcess.ServiceProcessInstaller serviceProcessInstaller;
-        private System.ServiceProcess.ServiceInstaller serviceInstaller;
+        protected System.ServiceProcess.ServiceProcessInstaller serviceProcessInstaller;
+        protected System.ServiceProcess.ServiceInstaller serviceInstaller;
 
 
         private System.ComponentModel.IContainer components = null;

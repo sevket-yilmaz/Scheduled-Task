@@ -7,7 +7,7 @@ using System.IO;
 using System.Threading.Tasks;
 using ScheduledTask.Infrastructure;
 using ScheduledTask.Infrastructure.Task;
-
+using System.ComponentModel;
 
 namespace ScheduledTask.Win.TestService
 {
@@ -16,9 +16,9 @@ namespace ScheduledTask.Win.TestService
         static void Main()
         {
             WindowsService windowsService = new WindowsService();
-            //windowsService.ServiceName = "DenemeWindowsService";
-            windowsService.TaskList.Add(new FiveMinutesTask());
-            windowsService.TaskList.Add(new At15OClockTask());
+            windowsService.ServiceName = "TestScheduledTaskService";
+            windowsService.TaskList.Add(new OneMinuteTask());
+            windowsService.TaskList.Add(new At11OClockTask());
 
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
@@ -28,39 +28,50 @@ namespace ScheduledTask.Win.TestService
             ServiceBase.Run(ServicesToRun);
         }
 
+        private static object LockObject = new object();
         public static void WriteLog(string Message)
         {
             if (!Directory.Exists(@"C:\\Log"))
-            {
                 Directory.CreateDirectory(@"C:\\Log");
-            }
+
             if (!File.Exists(@"C:\\Log\\Log.txt"))
-            {
                 File.Create(@"C:\\Log\\Log.txt").Close();
-            }
-            File.WriteAllText(@"C:\\Log\\Log.txt", Message);
-        }
 
-    }
-
-    public class FiveMinutesTask : MinutelyTask
-    {
-        public override int Interval => 5;
-
-        public override void Run()
-        {
-            Program.WriteLog("FiveMinutesTask : " + DateTime.Now);
+            lock (LockObject)
+                using (StreamWriter writer = new StreamWriter(@"C:\\Log\\Log.txt", true))
+                    writer.WriteLine(Message + Environment.NewLine);
         }
     }
 
-    public class At15OClockTask : HourlyTask
+    public class OneMinuteTask : MinutelyTask
     {
-        public override List<int> Hours => new List<int> { 15 };
-        public override List<int> Minutes => new List<int> { 0, 30 };
+        public override int Interval => 1;
 
         public override void Run()
         {
-            Program.WriteLog("At15OClockTask : " + DateTime.Now);
+            Program.WriteLog("OneMinuteTask : " + DateTime.Now);
+        }
+    }
+
+    public class At11OClockTask : HourlyTask
+    {
+        public override List<int> Hours => new List<int> { 12 };
+        public override List<int> Minutes => new List<int> { 4, 8, 11, 15 };
+
+        public override void Run()
+        {
+            Program.WriteLog("At11OClockTask : " + DateTime.Now);
+        }
+    }
+
+    [RunInstaller(true)]
+    public class Installer : WindowsServiceInstaller
+    {
+        public Installer() : base()
+        {
+            this.serviceInstaller.ServiceName = "TestScheduledTaskService";
+            this.serviceInstaller.DisplayName = "Test Scheduled Task Windows Service";
+            this.serviceInstaller.Description = "A test windows service for scheduled tasks...";
         }
     }
 }

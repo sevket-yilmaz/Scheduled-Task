@@ -43,8 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExampleTasks.cs" />
+    <Compile Include="Task\Attribute\TaskMethodAttribute.cs" />
     <Compile Include="Task\IScheduledTask.cs" />
+    <Compile Include="TaskMethodRunner.cs" />
     <Compile Include="Task\WeeklyTask.cs" />
     <Compile Include="Task\MonthlyTask.cs" />
     <Compile Include="Task\HourlyTask.cs" />

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduledTask.Infrastructure", "ScheduledTask.Infrastructure\ScheduledTask.Infrastructure.csproj", "{857306BC-D696-48C3-AF38-A494D94FE2CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduledTask.Win.ExampleService", "ScheduledTask.Win.TestService\ScheduledTask.Win.ExampleService.csproj", "{FE7428C4-A300-4231-B3FE-1747AF98DABE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScheduledTask.Win.ExampleService", "ScheduledTask.Win.ExampleService\ScheduledTask.Win.ExampleService.csproj", "{FE7428C4-A300-4231-B3FE-1747AF98DABE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,8 +1,8 @@
 # Scheduled Task Library
 
 
-### How to use?
-
+## How to use?
+#### 1- Class Based Tasks
 - Create a new Windows Service project
 - Import the **Scheduled Task Library** to your project
 - Create a new task class 
@@ -63,10 +63,31 @@ public class CustomServiceInstaller : WindowsServiceInstaller
 ```
 
 
-### Installation
+##### Installation
 
 You can install service with Command Prompt in this way:
 
 ```
 "C:\Windows\Microsoft.NET\Framework\v4.0.30319\installutil.exe" "C:\YourPath\YourService.exe"
 ```
+
+
+#### 2- Method Based Tasks
+If you want to run any method every few minutes you can use the **TaskMethod** attribute. And you don't need install windows service.
+
+```csharp
+//... any class in assembly
+//... in constructor or anywhere
+public MyClass()
+{
+    new TaskMethodRunner().Run(this);
+}
+//...
+[TaskMethod]
+public void MyMethod() 
+{
+    // do something
+}
+//...
+```
+

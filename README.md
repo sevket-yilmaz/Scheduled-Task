@@ -21,8 +21,8 @@ public class ExampleFiveMinutesTask : MinutelyTask
 }
 ```
 
-- Delete auto generated Service1 class and clear Main method of Program.cs
-- Create a new **ScheduledTask.Infrastructure.WindowsService** instance in Main method of Program.cs class and add your task to task list
+- Delete auto generated Service1 class and clear Main method of Program class
+- Create a new **ScheduledTask.Infrastructure.WindowsService** instance in Main method of Program class and add your task to task list
 
 ```csharp
 static class Program
